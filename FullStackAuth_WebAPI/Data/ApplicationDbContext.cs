@@ -12,6 +12,7 @@ namespace FullStackAuth_WebAPI.Data
         public DbSet<Zone> Zones { get; set; }
         public DbSet<PriorityFill> PriorityFills{ get; set; }
         public DbSet<OutOfStocks> OutOfStocks { get; set; }
+        public DbSet<Shift> Shifts { get; set; }
 
         public ApplicationDbContext(DbContextOptions options)
     : base(options)
