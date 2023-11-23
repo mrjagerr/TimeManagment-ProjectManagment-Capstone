@@ -8,7 +8,14 @@ namespace FullStackAuth_WebAPI.Models
 
         [Key]
         public int Id { get; set; }
-      
+
+        [Required]
+        public DateOnly ProjectDate { get; set; }
+
+        [Required] 
+        public string ProjectName { get; set; }
+
+
         [Required]
         public int WorkLoadAllocation { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FullStackAuth_WebAPI.Models
 {
@@ -19,5 +20,10 @@ namespace FullStackAuth_WebAPI.Models
 
         [Required]
         public int OosRemaining { get; set; } // total amount of Oos remaining 
+
+        [ForeignKey("ProjectName")]
+
+        public string ProjectName { get; set; }
+
     }
 }
