@@ -16,7 +16,7 @@ namespace FullStackAuth_WebAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.7")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.Car", b =>
@@ -104,6 +104,9 @@ namespace FullStackAuth_WebAPI.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
+                    b.Property<bool>("isTeamLead")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -144,13 +147,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "59de2413-2986-49fa-a7ea-d2ee9bae8830",
+                            Id = "ac474243-fe94-4fd5-bbe5-5efad17b3519",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "02826bcd-2b15-4c0a-8d85-281ade12b9b9",
+                            Id = "34aab862-a6dc-4d54-9ff0-1455af78147a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
