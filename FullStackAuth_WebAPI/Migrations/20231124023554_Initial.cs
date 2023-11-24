@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace FullStackAuth_WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,6 +39,7 @@ namespace FullStackAuth_WebAPI.Migrations
                     Id = table.Column<string>(type: "varchar(255)", nullable: false),
                     FirstName = table.Column<string>(type: "longtext", nullable: true),
                     LastName = table.Column<string>(type: "longtext", nullable: true),
+                    isTeamLead = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
@@ -57,6 +58,58 @@ namespace FullStackAuth_WebAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "OutOfStocks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    DepartmentName = table.Column<string>(type: "longtext", nullable: false),
+                    WorkLoadValue = table.Column<int>(type: "int", nullable: false),
+                    TotalOoaFill = table.Column<int>(type: "int", nullable: false),
+                    OosRemaining = table.Column<int>(type: "int", nullable: false),
+                    ProjectName = table.Column<string>(type: "longtext", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OutOfStocks", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "PriorityFills",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    DepartmentName = table.Column<string>(type: "longtext", nullable: false),
+                    WorkLoadValue = table.Column<int>(type: "int", nullable: false),
+                    TotalPriorityFill = table.Column<int>(type: "int", nullable: false),
+                    PriorityRemaining = table.Column<int>(type: "int", nullable: false),
+                    ProjectName = table.Column<string>(type: "longtext", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PriorityFills", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Zones",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    AreaToZone = table.Column<string>(type: "longtext", nullable: false),
+                    WorkloadValue = table.Column<string>(type: "longtext", nullable: false),
+                    ProjectName = table.Column<string>(type: "longtext", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Zones", x => x.Id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -193,13 +246,58 @@ namespace FullStackAuth_WebAPI.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ProjectName = table.Column<string>(type: "longtext", nullable: false),
+                    ProjectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    WorkLoadAllocation = table.Column<int>(type: "int", nullable: false),
+                    TotalWorkloadRequired = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    OwnerId = table.Column<string>(type: "varchar(255)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Projects_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Shifts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ShiftDuration = table.Column<int>(type: "int", nullable: false),
+                    Username = table.Column<string>(type: "longtext", nullable: true),
+                    OwnerId = table.Column<string>(type: "varchar(255)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shifts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Shifts_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "02826bcd-2b15-4c0a-8d85-281ade12b9b9", null, "Admin", "ADMIN" },
-                    { "59de2413-2986-49fa-a7ea-d2ee9bae8830", null, "User", "USER" }
+                    { "11d928bc-f444-410c-b2f4-031a06622511", null, "User", "USER" },
+                    { "8efdcc93-3d3b-49e9-aa19-7a8782843d8f", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -243,6 +341,16 @@ namespace FullStackAuth_WebAPI.Migrations
                 name: "IX_Cars_OwnerId",
                 table: "Cars",
                 column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_OwnerId",
+                table: "Projects",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shifts_OwnerId",
+                table: "Shifts",
+                column: "OwnerId");
         }
 
         /// <inheritdoc />
@@ -265,6 +373,21 @@ namespace FullStackAuth_WebAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cars");
+
+            migrationBuilder.DropTable(
+                name: "OutOfStocks");
+
+            migrationBuilder.DropTable(
+                name: "PriorityFills");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Shifts");
+
+            migrationBuilder.DropTable(
+                name: "Zones");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

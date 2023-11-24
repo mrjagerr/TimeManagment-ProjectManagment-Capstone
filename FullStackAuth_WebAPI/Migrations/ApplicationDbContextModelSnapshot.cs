@@ -277,13 +277,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3709d413-1dff-4b15-af02-30779e1926d0",
+                            Id = "11d928bc-f444-410c-b2f4-031a06622511",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "8a25c524-93e1-48c3-8490-fc68a66f7c3c",
+                            Id = "8efdcc93-3d3b-49e9-aa19-7a8782843d8f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

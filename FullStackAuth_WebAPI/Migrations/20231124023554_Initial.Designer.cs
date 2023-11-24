@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullStackAuth_WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231123182043_TeamLeadRoleAddition")]
-    partial class TeamLeadRoleAddition
+    [Migration("20231124023554_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,114 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Cars");
+                });
+
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.OutOfStocks", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("OosRemaining")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProjectName")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TotalOoaFill")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkLoadValue")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OutOfStocks");
+                });
+
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.PriorityFill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("PriorityRemaining")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProjectName")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TotalPriorityFill")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkLoadValue")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PriorityFills");
+                });
+
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("ProjectDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProjectName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TotalWorkloadRequired")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkLoadAllocation")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.Shift", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("ShiftDuration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Shifts");
                 });
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.User", b =>
@@ -122,6 +230,28 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.Zone", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("AreaToZone")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProjectName")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("WorkloadValue")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Zones");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -150,13 +280,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ac474243-fe94-4fd5-bbe5-5efad17b3519",
+                            Id = "11d928bc-f444-410c-b2f4-031a06622511",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "34aab862-a6dc-4d54-9ff0-1455af78147a",
+                            Id = "8efdcc93-3d3b-49e9-aa19-7a8782843d8f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -265,6 +395,24 @@ namespace FullStackAuth_WebAPI.Migrations
                 });
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.Car", b =>
+                {
+                    b.HasOne("FullStackAuth_WebAPI.Models.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.Project", b =>
+                {
+                    b.HasOne("FullStackAuth_WebAPI.Models.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.Shift", b =>
                 {
                     b.HasOne("FullStackAuth_WebAPI.Models.User", "Owner")
                         .WithMany()

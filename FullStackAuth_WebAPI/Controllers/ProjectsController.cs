@@ -58,7 +58,7 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // POST api/<ProjectsController>
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(Roles= "Admin")]
         public IActionResult Post([FromBody] Project data)
         {
             try

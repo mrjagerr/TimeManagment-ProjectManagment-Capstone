@@ -1,12 +1,8 @@
 ﻿using FullStackAuth_WebAPI.Data;
-using FullStackAuth_WebAPI.DataTransferObjects;
 using FullStackAuth_WebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,17 +19,16 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             _context = context;
         }
-    
         // GET: api/<ShiftsController>
         [HttpGet]
-        public IActionResult GetAllProjects()
+        public IActionResult GetAllShifts()
         {
             try
             {
                 //Includes entire Owner object--insecure!
                 //var cars = _context.Cars.Include(c => c.Owner).ToList();
 
-                
+
                 var shifts = _context.Shifts.ToList();
 
                 // Return the list of cars as a 200 OK response
@@ -45,37 +40,54 @@ namespace FullStackAuth_WebAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
         // GET api/<ShiftsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(string username)
         {
-            return "value";
+            try
+            {
+                // Retrieve the car with the specified ID, including the owner object
+                var shifts = _context.Shifts.Include(c => c.Owner).Where(c => c.UserName == username);
+
+                // If the car does not exist, return a 404 not found response
+                if (shifts == null)
+                {
+                    return NotFound();
+                }
+
+                // Return the car as a 200 OK response
+                return StatusCode(200, shifts);
+            }
+            catch (Exception ex)
+            {
+                // If an error occurs, return a 500 internal server error with the error message
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST api/<ShiftsController>
         [HttpPost, Authorize(Roles = "Admin")]
-        public IActionResult Post([FromBody] Shift data  )
+        public IActionResult Post([FromBody] Shift data)
         {
             try
             {
                 // Retrieve the authenticated user's ID from the JWT token
-                string adminId = User.FindFirstValue("id"); 
-              
+                string userId = User.FindFirstValue("id");
 
 
                 // If the user ID is null or empty, the user is not authenticated, so return a 401 unauthorized response
-                if (string.IsNullOrEmpty(adminId))
+                if (string.IsNullOrEmpty(userId))
                 {
                     return Unauthorized();
                 }
-             
+
 
                 // Set the car's owner ID  the authenticated user's ID we found earlier
-                data.OwnerId = adminId;
-              
+                data.OwnerId = userId;
 
+                // Add the car to the database and save changes
                 _context.Shifts.Add(data);
-                // Add the car to the database and save changes 
                 if (!ModelState.IsValid)
                 {
                     // If the car model state is invalid, return a 400 bad request response with the model state errors

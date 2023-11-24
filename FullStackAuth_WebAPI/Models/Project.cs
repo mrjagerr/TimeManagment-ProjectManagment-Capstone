@@ -20,7 +20,7 @@ namespace FullStackAuth_WebAPI.Models
 
         [Required]
         public int TotalWorkloadRequired { get; set; }
-        [Required]
+       
         public int ProjectId { get; set; }
 
 
