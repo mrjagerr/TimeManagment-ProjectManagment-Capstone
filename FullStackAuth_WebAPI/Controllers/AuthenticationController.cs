@@ -49,7 +49,12 @@ namespace FullStackAuth_WebAPI.Controllers
                 LastName = user.LastName,
                 isTeamLead = user.isTeamLead
             };
+            if(createdUser.isTeamLead == true)
+            {
+                await _userManager.AddToRoleAsync(user, "Admin");
+            }
             return StatusCode(201, createdUser);
+           
         }
 
         [HttpPost("login")]

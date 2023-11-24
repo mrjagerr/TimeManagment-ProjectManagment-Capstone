@@ -60,6 +60,7 @@ namespace FullStackAuth_WebAPI.Controllers
             {
                 // Retrieve the authenticated user's ID from the JWT token
                 string userId = User.FindFirstValue("id");
+               
 
 
                 // If the user ID is null or empty, the user is not authenticated, so return a 401 unauthorized response
@@ -67,13 +68,13 @@ namespace FullStackAuth_WebAPI.Controllers
                 {
                     return Unauthorized();
                 }
-
+                string tmId = User.FindFirstValue("id");
 
                 // Set the car's owner ID  the authenticated user's ID we found earlier
                 data.OwnerId = userId;
+              
 
-                // Add the car to the database and save changes
-                _context.Shifts.Add(data);
+                // Add the car to the database and save changes 
                 if (!ModelState.IsValid)
                 {
                     // If the car model state is invalid, return a 400 bad request response with the model state errors
