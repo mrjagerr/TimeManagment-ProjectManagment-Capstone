@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace FullStackAuth_WebAPI.DataTransferObjects
 {
@@ -10,5 +11,6 @@ namespace FullStackAuth_WebAPI.DataTransferObjects
         public string LastName { get; set; }
         public string UserName { get; set; }
         public bool isTeamLead { get; set; }
+
     }
 }

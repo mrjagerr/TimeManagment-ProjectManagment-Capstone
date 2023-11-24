@@ -47,7 +47,9 @@ namespace FullStackAuth_WebAPI.Controllers
                 UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                isTeamLead = user.isTeamLead
+                isTeamLead = user.isTeamLead,
+              
+                
             };
             if(createdUser.isTeamLead == true)
             {

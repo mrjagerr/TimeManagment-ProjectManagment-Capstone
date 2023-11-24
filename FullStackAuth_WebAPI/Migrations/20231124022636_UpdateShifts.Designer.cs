@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullStackAuth_WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231123223747_updateofdatabase")]
-    partial class Updateofdatabase
+    [Migration("20231124022636_UpdateShifts")]
+    partial class UpdateShifts
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,6 +147,9 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.Property<int>("ShiftDuration")
                         .HasColumnType("int");
 
+                    b.Property<string>("Username")
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
@@ -277,13 +280,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bc63685a-b4da-4778-82d4-eba77bcab7fd",
+                            Id = "3709d413-1dff-4b15-af02-30779e1926d0",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "3ab6e151-c362-44b0-9d52-4f85862a3e26",
+                            Id = "8a25c524-93e1-48c3-8490-fc68a66f7c3c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

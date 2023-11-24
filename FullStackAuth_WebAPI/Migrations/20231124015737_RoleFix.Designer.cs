@@ -3,6 +3,7 @@ using System;
 using FullStackAuth_WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullStackAuth_WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231124015737_RoleFix")]
+    partial class RoleFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,7 +147,7 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.Property<int>("ShiftDuration")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("TeamMemberUsername")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -277,13 +280,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3709d413-1dff-4b15-af02-30779e1926d0",
+                            Id = "e080ccec-4660-4531-a96a-80517737ecd9",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "8a25c524-93e1-48c3-8490-fc68a66f7c3c",
+                            Id = "fd719f2e-2782-4ba1-b7ba-7c540e233386",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

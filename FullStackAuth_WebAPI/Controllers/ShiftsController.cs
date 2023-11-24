@@ -53,27 +53,28 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // POST api/<ShiftsController>
-        [HttpPost, Authorize]
-        public IActionResult Post([FromBody] Shift data)
+        [HttpPost, Authorize(Roles = "Admin")]
+        public IActionResult Post([FromBody] Shift data  )
         {
             try
             {
                 // Retrieve the authenticated user's ID from the JWT token
-                string userId = User.FindFirstValue("id");
-               
+                string adminId = User.FindFirstValue("id"); 
+              
 
 
                 // If the user ID is null or empty, the user is not authenticated, so return a 401 unauthorized response
-                if (string.IsNullOrEmpty(userId))
+                if (string.IsNullOrEmpty(adminId))
                 {
                     return Unauthorized();
                 }
-                string tmId = User.FindFirstValue("id");
+             
 
                 // Set the car's owner ID  the authenticated user's ID we found earlier
-                data.OwnerId = userId;
+                data.OwnerId = adminId;
               
 
+                _context.Shifts.Add(data);
                 // Add the car to the database and save changes 
                 if (!ModelState.IsValid)
                 {

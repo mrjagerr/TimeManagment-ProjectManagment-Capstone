@@ -11,13 +11,16 @@ namespace FullStackAuth_WebAPI.Models
         [Required]
         public int ShiftDuration { get; set; }
 
+        public string Username { get; set; }
+        // Team member username
+       
         
 
 
-        [ForeignKey("Owner")]
+        [ForeignKey("Owner")] //admin id
         public string OwnerId { get; set; }
-
         public User Owner { get; set; }
+     
        
     }
 }
