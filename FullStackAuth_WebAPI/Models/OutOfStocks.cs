@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FullStackAuth_WebAPI.Models
 {
-    public class OutOfStocks
+    public class OutOfStocks // out of stock for that area
     {
         [Key]
         public int Id { get; set; }

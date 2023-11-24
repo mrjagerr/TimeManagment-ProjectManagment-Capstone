@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FullStackAuth_WebAPI.Models
 {
-    public class Zone
+   public class Zone //zone for that day
     {
         [Key]
         public int Id { get; set; }
@@ -16,6 +16,7 @@ namespace FullStackAuth_WebAPI.Models
 
         [ForeignKey("ProjectName")]
 
+       
         public string ProjectName { get; set; }
 
 

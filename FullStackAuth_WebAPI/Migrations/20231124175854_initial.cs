@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace FullStackAuth_WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -276,8 +276,8 @@ namespace FullStackAuth_WebAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(type: "longtext", nullable: true),
                     ShiftDuration = table.Column<int>(type: "int", nullable: false),
-                    Username = table.Column<string>(type: "longtext", nullable: true),
                     OwnerId = table.Column<string>(type: "varchar(255)", nullable: true)
                 },
                 constraints: table =>
@@ -296,8 +296,8 @@ namespace FullStackAuth_WebAPI.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "11d928bc-f444-410c-b2f4-031a06622511", null, "User", "USER" },
-                    { "8efdcc93-3d3b-49e9-aa19-7a8782843d8f", null, "Admin", "ADMIN" }
+                    { "49aeb9ae-9f52-464c-a033-ed389b53eeb2", null, "User", "USER" },
+                    { "f7ddf7ef-8747-4c1e-a3dd-55bb1845f61a", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

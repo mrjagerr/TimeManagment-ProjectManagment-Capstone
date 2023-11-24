@@ -114,13 +114,14 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // PUT api/<ProjectsController>/5
-        [HttpPut("{projectId}"), Authorize(Roles = "Admin")]
-        public IActionResult Put(int projectId, [FromBody] Project data)
+        [HttpPut("{projectName}"), Authorize(Roles = "Admin")]
+        public IActionResult Put(string projectName, [FromBody] Project data)
         {
             try
             {
+                string userId = User.FindFirstValue("id");
                 // Find the car to be updated
-                 Project project  = _context.Projects.Include(c => c.Owner).FirstOrDefault(c => c.ProjectId == projectId);
+                Project project  = _context.Projects.FirstOrDefault(c => c.ProjectName == projectName);
 
                 if (project == null)
                 {
@@ -129,7 +130,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 }
 
                 // Check if the authenticated user is the owner of the car
-                var userId = User.FindFirstValue("id");
+                
                 if (string.IsNullOrEmpty(userId) || project.OwnerId != userId)
                 {
                     // Return a 401 Unauthorized error if the authenticated user is not the owner of the car
@@ -137,12 +138,11 @@ namespace FullStackAuth_WebAPI.Controllers
                 }
 
                 // Update the car properties
-                project.OwnerId = userId;
-                project.Owner = _context.Users.Find(userId);
-                project.ProjectName = data.ProjectName;
-                project.ProjectDate = data.ProjectDate;
+              
+              
                 project.WorkLoadAllocation = data.WorkLoadAllocation;
                 project.TotalWorkloadRequired = data.TotalWorkloadRequired;
+              
 
                 if (!ModelState.IsValid)
                 {

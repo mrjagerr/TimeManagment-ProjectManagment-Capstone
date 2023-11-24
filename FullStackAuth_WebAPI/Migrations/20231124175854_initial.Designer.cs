@@ -3,6 +3,7 @@ using System;
 using FullStackAuth_WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullStackAuth_WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231124175854_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,36 +47,6 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Cars");
-                });
-
-            modelBuilder.Entity("FullStackAuth_WebAPI.Models.DailyProject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("OutOfStocksId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PriorityFillId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProjectName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("ZoneId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OutOfStocksId");
-
-                    b.HasIndex("PriorityFillId");
-
-                    b.HasIndex("ZoneId");
-
-                    b.ToTable("DailyProjects");
                 });
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.OutOfStocks", b =>
@@ -307,13 +280,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f582a51e-6280-47b9-b7b4-c8d6f4a48f5e",
+                            Id = "49aeb9ae-9f52-464c-a033-ed389b53eeb2",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "2654dcb7-b9ca-4030-95dd-127af4c88ead",
+                            Id = "f7ddf7ef-8747-4c1e-a3dd-55bb1845f61a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -428,33 +401,6 @@ namespace FullStackAuth_WebAPI.Migrations
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("FullStackAuth_WebAPI.Models.DailyProject", b =>
-                {
-                    b.HasOne("FullStackAuth_WebAPI.Models.OutOfStocks", "OutOfStocks")
-                        .WithMany()
-                        .HasForeignKey("OutOfStocksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FullStackAuth_WebAPI.Models.PriorityFill", "PriorityFill")
-                        .WithMany()
-                        .HasForeignKey("PriorityFillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FullStackAuth_WebAPI.Models.Zone", "Zone")
-                        .WithMany()
-                        .HasForeignKey("ZoneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OutOfStocks");
-
-                    b.Navigation("PriorityFill");
-
-                    b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.Project", b =>
