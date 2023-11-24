@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullStackAuth_WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231124175854_initial")]
-    partial class initial
+    [Migration("20231124204841_Updatev1")]
+    partial class Updatev1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,21 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.DailyProject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProjectName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DailyProjects");
+                });
+
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.OutOfStocks", b =>
                 {
                     b.Property<int>("Id")
@@ -65,7 +80,7 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.Property<string>("ProjectName")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("TotalOoaFill")
+                    b.Property<int>("TotalOosFill")
                         .HasColumnType("int");
 
                     b.Property<int>("WorkLoadValue")
@@ -243,9 +258,8 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.Property<string>("ProjectName")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("WorkloadValue")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("WorkloadValue")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -280,13 +294,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "49aeb9ae-9f52-464c-a033-ed389b53eeb2",
+                            Id = "a1a11f2f-1433-4954-97fd-4e9c47504b4e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "f7ddf7ef-8747-4c1e-a3dd-55bb1845f61a",
+                            Id = "37df1727-c655-4634-9615-2d867c7e9dd3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

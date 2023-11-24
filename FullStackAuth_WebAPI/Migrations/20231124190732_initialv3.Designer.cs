@@ -3,6 +3,7 @@ using System;
 using FullStackAuth_WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullStackAuth_WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231124190732_initialv3")]
+    partial class initialv3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,17 +55,26 @@ namespace FullStackAuth_WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ProjectDate")
-                        .HasColumnType("datetime(6)");
+                    b.Property<int>("OutOfStocksId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriorityFillId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProjectName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("TotalHoursForSingleProject")
+                    b.Property<int>("ZoneId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OutOfStocksId");
+
+                    b.HasIndex("PriorityFillId");
+
+                    b.HasIndex("ZoneId");
 
                     b.ToTable("DailyProjects");
                 });
@@ -79,9 +91,6 @@ namespace FullStackAuth_WebAPI.Migrations
 
                     b.Property<int>("OosRemaining")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("ProjectDate")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("ProjectName")
                         .HasColumnType("longtext");
@@ -109,9 +118,6 @@ namespace FullStackAuth_WebAPI.Migrations
 
                     b.Property<int>("PriorityRemaining")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("ProjectDate")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("ProjectName")
                         .HasColumnType("longtext");
@@ -264,14 +270,12 @@ namespace FullStackAuth_WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("ProjectDate")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("ProjectName")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("WorkloadValue")
-                        .HasColumnType("int");
+                    b.Property<string>("WorkloadValue")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -306,13 +310,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "990cfe9a-f780-4d63-b9dd-c2390468d83f",
+                            Id = "543d5b8a-9b71-4aea-a368-0d7d45e9d13f",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "49cd51b6-dcb6-4815-8bd2-f341ffa8de51",
+                            Id = "c4624bc2-bc21-49eb-8967-207e031f89ac",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -427,6 +431,33 @@ namespace FullStackAuth_WebAPI.Migrations
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.DailyProject", b =>
+                {
+                    b.HasOne("FullStackAuth_WebAPI.Models.OutOfStocks", "OutOfStocks")
+                        .WithMany()
+                        .HasForeignKey("OutOfStocksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FullStackAuth_WebAPI.Models.PriorityFill", "PriorityFill")
+                        .WithMany()
+                        .HasForeignKey("PriorityFillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FullStackAuth_WebAPI.Models.Zone", "Zone")
+                        .WithMany()
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OutOfStocks");
+
+                    b.Navigation("PriorityFill");
+
+                    b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.Project", b =>

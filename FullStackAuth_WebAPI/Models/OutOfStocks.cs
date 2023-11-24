@@ -16,10 +16,13 @@ namespace FullStackAuth_WebAPI.Models
         public int WorkLoadValue { get; set; } // total work load to finish task
 
         [Required]
-        public int TotalOoaFill { get; set; } // total amount of items to pull
+        public int TotalOosFill { get; set; } // total amount of items to pull
 
         [Required]
         public int OosRemaining { get; set; } // total amount of Oos remaining 
+        [Required]
+        public DateTime ProjectDate { get; set; }
+
 
         [ForeignKey("ProjectName")]
 

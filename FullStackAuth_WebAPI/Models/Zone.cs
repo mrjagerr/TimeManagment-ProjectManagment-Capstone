@@ -12,7 +12,10 @@ namespace FullStackAuth_WebAPI.Models
         public string AreaToZone { get; set; } //Area that needs to be zoned
 
         [Required]
-        public string WorkloadValue { get; set; } // hrs requried to do work
+        public int WorkloadValue { get; set; } // hrs requried to do work
+        [Required]
+        public DateTime ProjectDate { get; set; }
+
 
         [ForeignKey("ProjectName")]
 

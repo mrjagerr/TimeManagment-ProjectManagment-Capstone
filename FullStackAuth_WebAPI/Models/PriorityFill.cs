@@ -22,6 +22,9 @@ namespace FullStackAuth_WebAPI.Models
 
         [Required]
         public int PriorityRemaining { get; set; } // total amount remaining 
+        [Required]
+        public DateTime ProjectDate { get; set; }
+
 
 
         [ForeignKey("ProjectName")]

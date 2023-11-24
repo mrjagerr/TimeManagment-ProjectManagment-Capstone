@@ -14,13 +14,10 @@ namespace FullStackAuth_WebAPI.Models
         [Required]
         public string ProjectName { get; set; }
         [Required]
-        public Zone Zone { get; set; }
+        public int TotalHoursForSingleProject { get; set; }
+        [Required]
+        public DateTime ProjectDate { get; set; }
 
-        [Required]
-        public PriorityFill PriorityFill { get; set; }
-        
-        [Required]
-        public OutOfStocks OutOfStocks { get; set; }
 
 
     }

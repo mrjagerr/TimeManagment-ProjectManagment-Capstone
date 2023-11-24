@@ -20,6 +20,7 @@ namespace FullStackAuth_WebAPI.DataTransferObjects
         public OutOfStocks OutOfStocks { get; set; }
 
         public UserForDisplayDto TeamMember { get; set; }
+        public DateTime ProjectDate { get; set; }
 
     }
 }
