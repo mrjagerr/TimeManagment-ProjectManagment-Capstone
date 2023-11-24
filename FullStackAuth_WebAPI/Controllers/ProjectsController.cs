@@ -19,7 +19,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
 
-       
+
     {
         private readonly ApplicationDbContext _context;
 
@@ -27,7 +27,7 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             _context = context;
         }
-    
+
         // GET: api/<ProjectsController>
         [HttpGet]
         public IActionResult GetAllProjects()
@@ -37,7 +37,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 //Includes entire Owner object--insecure!
                 //var cars = _context.Cars.Include(c => c.Owner).ToList();
 
-               
+
                 var projects = _context.Projects.ToList();
 
                 // Return the list of cars as a 200 OK response
@@ -51,10 +51,27 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // GET api/<ProjectsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("CurrentDaysProjects/{dateTime}")]
+       
+        public IActionResult GetUsersCars(DateTime dateTime)
         {
-            return "value";
+            try
+            {
+                // Retrieve the authenticated user's ID from the JWT token
+
+
+
+                // Retrieve all cars that belong to the authenticated user, including the owner object
+                var currentProjects = _context.Projects.Where(c => c.ProjectDate.Equals(dateTime));
+
+                // Return the list of cars as a 200 OK response
+                return StatusCode(200, currentProjects);
+            }
+            catch (Exception ex)
+            {
+                // If an error occurs, return a 500 internal server error with the error message
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST api/<ProjectsController>
@@ -97,9 +114,51 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // PUT api/<ProjectsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{projectId}"), Authorize(Roles = "Admin")]
+        public IActionResult Put(int projectId, [FromBody] Project data)
         {
+            try
+            {
+                // Find the car to be updated
+                 Project project  = _context.Projects.Include(c => c.Owner).FirstOrDefault(c => c.ProjectId == projectId);
+
+                if (project == null)
+                {
+                    // Return a 404 Not Found error if the car with the specified ID does not exist
+                    return NotFound();
+                }
+
+                // Check if the authenticated user is the owner of the car
+                var userId = User.FindFirstValue("id");
+                if (string.IsNullOrEmpty(userId) || project.OwnerId != userId)
+                {
+                    // Return a 401 Unauthorized error if the authenticated user is not the owner of the car
+                    return Unauthorized();
+                }
+
+                // Update the car properties
+                project.OwnerId = userId;
+                project.Owner = _context.Users.Find(userId);
+                project.ProjectName = data.ProjectName;
+                project.ProjectDate = data.ProjectDate;
+                project.WorkLoadAllocation = data.WorkLoadAllocation;
+                project.TotalWorkloadRequired = data.TotalWorkloadRequired;
+
+                if (!ModelState.IsValid)
+                {
+                    // Return a 400 Bad Request error if the request data is invalid
+                    return BadRequest(ModelState);
+                }
+                _context.SaveChanges();
+
+                // Return a 201 Created status code and the updated car object
+                return StatusCode(201, project);
+            }
+            catch (Exception ex)
+            {
+                // Return a 500 Internal Server Error with the error message if an exception occurs
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // DELETE api/<ProjectsController>/5

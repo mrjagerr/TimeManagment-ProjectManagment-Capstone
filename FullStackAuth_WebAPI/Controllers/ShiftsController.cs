@@ -42,13 +42,13 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // GET api/<ShiftsController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(string username)
+        [HttpGet("{userName}")]
+        public IActionResult Get(string userName)
         {
             try
             {
                 // Retrieve the car with the specified ID, including the owner object
-                var shifts = _context.Shifts.Include(c => c.Owner).Where(c => c.UserName == username);
+                var shifts = _context.Shifts.Where(c => c.UserName == userName).ToList();
 
                 // If the car does not exist, return a 404 not found response
                 if (shifts == null)
@@ -57,7 +57,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 }
 
                 // Return the car as a 200 OK response
-                return StatusCode(200, shifts);
+                return StatusCode(200,shifts);
             }
             catch (Exception ex)
             {
