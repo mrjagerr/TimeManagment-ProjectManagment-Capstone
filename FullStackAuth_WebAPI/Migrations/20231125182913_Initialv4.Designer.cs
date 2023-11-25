@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullStackAuth_WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231124204841_Updatev1")]
-    partial class Updatev1
+    [Migration("20231125182913_Initialv4")]
+    partial class Initialv4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,9 +55,15 @@ namespace FullStackAuth_WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ProjectName")
+                    b.Property<string>("DepartmentName")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("ProjectDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("TotalHoursForSingleProject")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -76,6 +82,9 @@ namespace FullStackAuth_WebAPI.Migrations
 
                     b.Property<int>("OosRemaining")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("ProjectDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("ProjectName")
                         .HasColumnType("longtext");
@@ -103,6 +112,9 @@ namespace FullStackAuth_WebAPI.Migrations
 
                     b.Property<int>("PriorityRemaining")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("ProjectDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("ProjectName")
                         .HasColumnType("longtext");
@@ -255,6 +267,9 @@ namespace FullStackAuth_WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<DateTime>("ProjectDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("ProjectName")
                         .HasColumnType("longtext");
 
@@ -294,13 +309,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a1a11f2f-1433-4954-97fd-4e9c47504b4e",
+                            Id = "359636a3-6179-4419-9f94-b58f762371cc",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "37df1727-c655-4634-9615-2d867c7e9dd3",
+                            Id = "04baf19d-9916-424c-81ee-856f7a4c784b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

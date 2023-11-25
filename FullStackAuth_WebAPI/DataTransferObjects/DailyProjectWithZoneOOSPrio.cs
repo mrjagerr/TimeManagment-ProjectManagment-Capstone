@@ -8,19 +8,14 @@ namespace FullStackAuth_WebAPI.DataTransferObjects
 
         [Key]
         public int Id { get; set; }
-  
+        public DateTime ProjectDate { get; set; }
         public string ProjectName { get; set; }
-  
-        public Zone Zone { get; set; }
-
-      
-        public PriorityFill PriorityFill { get; set; }
-
-  
-        public OutOfStocks OutOfStocks { get; set; }
+        public OutOfStockDto OutOfStock { get; set; }
+        public PriorityFillDto PriorityFill { get; set; }
+        public ZoneDto Zone { get; set; }
 
         public UserForDisplayDto TeamMember { get; set; }
-        public DateTime ProjectDate { get; set; }
+       
 
     }
 }

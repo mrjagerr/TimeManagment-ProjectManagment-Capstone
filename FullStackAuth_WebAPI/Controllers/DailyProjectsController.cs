@@ -1,4 +1,5 @@
 ﻿using FullStackAuth_WebAPI.Data;
+using FullStackAuth_WebAPI.DataTransferObjects;
 using FullStackAuth_WebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -42,9 +43,9 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // GET api/<DailyProjectsController>/5
-        [HttpGet("CurrentDaysProjects/{dateTime}")]
+        [HttpGet("CurrentDaysProjects/{dateTime}/{department}")]
 
-        public IActionResult GetUsersCars(DateTime dateTime)
+        public IActionResult GetUsersCars(DateTime dateTime,string department)
         {
             try
             {
@@ -52,11 +53,23 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
 
-                // Retrieve all cars that belong to the authenticated user, including the owner object
-                var currentProjects = _context.DailyProjects.Where(c => c.ProjectDate.Equals(dateTime));
+                //retrieves the project linked to the date
+
+               
+                var outOfStocks = _context.OutOfStocks.Where(c=> c.ProjectDate.Equals(dateTime) && c.DepartmentName == department);
+                var priorityFill = _context.PriorityFills.Where(c => c.ProjectDate.Equals(dateTime) && c.DepartmentName.Equals(department));
+                var zone= _context.Zones.Where(c => c.ProjectDate == dateTime && c.DepartmentName == department).Select( c=> new ZoneDto
+                {
+                    AreaToZone = c.AreaToZone,
+                    DepartmentName = c.DepartmentName,
+                    WorkloadValue = c.WorkloadValue,
+
+                });
+
+              
 
                 // Return the list of cars as a 200 OK response
-                return StatusCode(200, currentProjects);
+                return StatusCode(200, zone);
             }
             catch (Exception ex)
             {
@@ -83,7 +96,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
                 // Set the car's owner ID  the authenticated user's ID we found earlier
-                data.ProjectName = data.ProjectName;
+                data.DepartmentName = data.DepartmentName;
                 data.ProjectDate = data.ProjectDate;
                
 

@@ -5,7 +5,6 @@ using System.Data.SqlTypes;
 namespace FullStackAuth_WebAPI.Models
 {
     public class Project //total days project that needs to be completed
-
     {
 
         [Key]

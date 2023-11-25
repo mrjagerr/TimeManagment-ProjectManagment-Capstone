@@ -16,11 +16,10 @@ namespace FullStackAuth_WebAPI.Models
         [Required]
         public DateTime ProjectDate { get; set; }
 
+        [Required]
+        public string DepartmentName { get; set; }
 
-        [ForeignKey("ProjectName")]
 
-       
-        public string ProjectName { get; set; }
 
 
     }

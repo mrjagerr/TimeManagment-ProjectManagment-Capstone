@@ -27,9 +27,5 @@ namespace FullStackAuth_WebAPI.Models
 
 
 
-        [ForeignKey("ProjectName")]
-     
-        public string ProjectName { get; set; }
-
     }
 }

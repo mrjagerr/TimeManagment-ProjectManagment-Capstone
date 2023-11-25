@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FullStackAuth_WebAPI.DataTransferObjects;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FullStackAuth_WebAPI.Models
@@ -23,10 +24,6 @@ namespace FullStackAuth_WebAPI.Models
         [Required]
         public DateTime ProjectDate { get; set; }
 
-
-        [ForeignKey("ProjectName")]
-
-        public string ProjectName { get; set; }
-
+     
     }
 }

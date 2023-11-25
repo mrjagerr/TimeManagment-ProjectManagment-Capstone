@@ -12,7 +12,7 @@ namespace FullStackAuth_WebAPI.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string ProjectName { get; set; }
+        public string DepartmentName { get; set; }
         [Required]
         public int TotalHoursForSingleProject { get; set; }
         [Required]

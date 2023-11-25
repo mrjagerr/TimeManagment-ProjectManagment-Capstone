@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullStackAuth_WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231124205036_updatev3")]
-    partial class updatev3
+    [Migration("20231125184543_updatev1")]
+    partial class updatev1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,9 +55,12 @@ namespace FullStackAuth_WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ProjectName")
+                    b.Property<string>("DepartmentName")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("ProjectDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("TotalHoursForSingleProject")
                         .HasColumnType("int");
@@ -80,8 +83,8 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.Property<int>("OosRemaining")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProjectName")
-                        .HasColumnType("longtext");
+                    b.Property<DateTime>("ProjectDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("TotalOosFill")
                         .HasColumnType("int");
@@ -107,8 +110,8 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.Property<int>("PriorityRemaining")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProjectName")
-                        .HasColumnType("longtext");
+                    b.Property<DateTime>("ProjectDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("TotalPriorityFill")
                         .HasColumnType("int");
@@ -258,8 +261,12 @@ namespace FullStackAuth_WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("ProjectName")
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("ProjectDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("WorkloadValue")
                         .HasColumnType("int");
@@ -297,13 +304,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0a5ad8ef-fa5d-4592-8df9-661dae1a4355",
+                            Id = "855ceeaf-f4b5-40fe-865e-84e241fd9185",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "a9d15cb4-1434-444c-8394-375b189cf8e0",
+                            Id = "9ee6a069-95f3-47d5-891a-9504a7eca832",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace FullStackAuth_WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initialv3 : Migration
+    public partial class Initialv4 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,6 +62,22 @@ namespace FullStackAuth_WebAPI.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "DailyProjects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    DepartmentName = table.Column<string>(type: "longtext", nullable: false),
+                    TotalHoursForSingleProject = table.Column<int>(type: "int", nullable: false),
+                    ProjectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DailyProjects", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "OutOfStocks",
                 columns: table => new
                 {
@@ -71,6 +87,7 @@ namespace FullStackAuth_WebAPI.Migrations
                     WorkLoadValue = table.Column<int>(type: "int", nullable: false),
                     TotalOosFill = table.Column<int>(type: "int", nullable: false),
                     OosRemaining = table.Column<int>(type: "int", nullable: false),
+                    ProjectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ProjectName = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
@@ -89,6 +106,7 @@ namespace FullStackAuth_WebAPI.Migrations
                     WorkLoadValue = table.Column<int>(type: "int", nullable: false),
                     TotalPriorityFill = table.Column<int>(type: "int", nullable: false),
                     PriorityRemaining = table.Column<int>(type: "int", nullable: false),
+                    ProjectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ProjectName = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
@@ -104,7 +122,8 @@ namespace FullStackAuth_WebAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     AreaToZone = table.Column<string>(type: "longtext", nullable: false),
-                    WorkloadValue = table.Column<string>(type: "longtext", nullable: false),
+                    WorkloadValue = table.Column<int>(type: "int", nullable: false),
+                    ProjectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ProjectName = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
@@ -291,48 +310,13 @@ namespace FullStackAuth_WebAPI.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "DailyProjects",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    ProjectName = table.Column<string>(type: "longtext", nullable: false),
-                    ZoneId = table.Column<int>(type: "int", nullable: false),
-                    PriorityFillId = table.Column<int>(type: "int", nullable: false),
-                    OutOfStocksId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DailyProjects", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DailyProjects_OutOfStocks_OutOfStocksId",
-                        column: x => x.OutOfStocksId,
-                        principalTable: "OutOfStocks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DailyProjects_PriorityFills_PriorityFillId",
-                        column: x => x.PriorityFillId,
-                        principalTable: "PriorityFills",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DailyProjects_Zones_ZoneId",
-                        column: x => x.ZoneId,
-                        principalTable: "Zones",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "543d5b8a-9b71-4aea-a368-0d7d45e9d13f", null, "User", "USER" },
-                    { "c4624bc2-bc21-49eb-8967-207e031f89ac", null, "Admin", "ADMIN" }
+                    { "04baf19d-9916-424c-81ee-856f7a4c784b", null, "Admin", "ADMIN" },
+                    { "359636a3-6179-4419-9f94-b58f762371cc", null, "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -378,21 +362,6 @@ namespace FullStackAuth_WebAPI.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DailyProjects_OutOfStocksId",
-                table: "DailyProjects",
-                column: "OutOfStocksId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DailyProjects_PriorityFillId",
-                table: "DailyProjects",
-                column: "PriorityFillId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DailyProjects_ZoneId",
-                table: "DailyProjects",
-                column: "ZoneId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Projects_OwnerId",
                 table: "Projects",
                 column: "OwnerId");
@@ -428,22 +397,22 @@ namespace FullStackAuth_WebAPI.Migrations
                 name: "DailyProjects");
 
             migrationBuilder.DropTable(
-                name: "Projects");
-
-            migrationBuilder.DropTable(
-                name: "Shifts");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
                 name: "OutOfStocks");
 
             migrationBuilder.DropTable(
                 name: "PriorityFills");
 
             migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Shifts");
+
+            migrationBuilder.DropTable(
                 name: "Zones");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
