@@ -17,8 +17,15 @@ namespace FullStackAuth_WebAPI.Models
         public int TotalHoursForSingleProject { get; set; }
         [Required]
         public DateTime ProjectDate { get; set; }
+        public ICollection<Zone> Zone { get; set; }
+        public ICollection<PriorityFill> PriorityFill { get; set; }
+        public ICollection<OutOfStocks> OutOfStocks { get; set;}
 
 
 
+        [ForeignKey("Owner")]
+        public string OwnerId { get; set; }
+
+        public User Owner { get; set; }
     }
 }

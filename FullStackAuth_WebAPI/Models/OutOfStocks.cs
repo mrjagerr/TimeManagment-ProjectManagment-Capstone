@@ -24,6 +24,7 @@ namespace FullStackAuth_WebAPI.Models
         [Required]
         public DateTime ProjectDate { get; set; }
 
+    
      
     }
 }

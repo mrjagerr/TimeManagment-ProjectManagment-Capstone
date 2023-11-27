@@ -3,6 +3,8 @@ using FullStackAuth_WebAPI.DataTransferObjects;
 using FullStackAuth_WebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -45,7 +47,7 @@ namespace FullStackAuth_WebAPI.Controllers
         // GET api/<DailyProjectsController>/5
         [HttpGet("CurrentDaysProjects/{dateTime}/{department}")]
 
-        public IActionResult GetUsersCars(DateTime dateTime,string department)
+        public IActionResult GetbyDepartmentDate(DateTime dateTime,string department)
         {
             try
             {
@@ -63,13 +65,57 @@ namespace FullStackAuth_WebAPI.Controllers
                     AreaToZone = c.AreaToZone,
                     DepartmentName = c.DepartmentName,
                     WorkloadValue = c.WorkloadValue,
+                    ProjectDate = c.ProjectDate,
 
                 });
 
+                var todaysProject = _context.DailyProjects.Where(c => c.ProjectDate == dateTime && c.DepartmentName == department).Select(d => new DailyProjectWithZoneOOSPrioDto
+                {
+                    Id = d.Id,
+                    ProjectDate = d.ProjectDate,
+                    DepartmentName = d.DepartmentName,
+                    Zones = _context.Zones.Where(c => c.ProjectDate == dateTime && c.DepartmentName == department).Select(c => new ZoneDto
+                    {
+                        AreaToZone = c.AreaToZone,
+                        DepartmentName = c.DepartmentName,
+                        WorkloadValue = c.WorkloadValue,
+                        ProjectDate = c.ProjectDate,
+
+                    }).ToList(),
+                    PriorityFill = _context.PriorityFills.Where(c => c.ProjectDate == dateTime && c.DepartmentName == department).Select( c=> new PriorityFillDto
+                    {
+                       PriorityRemaining = c.PriorityRemaining,
+                       DepartmentName = c.DepartmentName,
+                       ProjectDate= c.ProjectDate,
+                       TotalPriorityFill = c.TotalPriorityFill,
+                       WorkLoadValue =c.WorkLoadValue
+
+                    }) . ToList(), 
+                    outOfStocks = _context.OutOfStocks.Where(c => c.ProjectDate == dateTime && c.DepartmentName == department).Select( c=> new OutOfStockDto
+                    {
+                        TotalOosFill = c.TotalOosFill,
+                        TotalOosRemaining = c.OosRemaining,
+                        DepartmentName = c.DepartmentName,
+                        ProjectDate = c.ProjectDate,
+
+                        WorkLoadValue = c.WorkLoadValue
+
+                    }) . ToList(), 
+
+
+
+                }) ;
+                if (todaysProject == null)
+                {
+                    return NotFound();
+                }
+
+            
               
+             
 
                 // Return the list of cars as a 200 OK response
-                return StatusCode(200, zone);
+                return StatusCode(200, todaysProject);
             }
             catch (Exception ex)
             {

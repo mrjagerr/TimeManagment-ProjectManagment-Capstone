@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FullStackAuth_WebAPI.DataTransferObjects
 {
-    public class DailyProjectWithZoneOOSPrio
+    public class DailyProjectWithZoneOOSPrioDto
     {
 
         [Key]
         public int Id { get; set; }
         public DateTime ProjectDate { get; set; }
-        public string ProjectName { get; set; }
-        public OutOfStockDto OutOfStock { get; set; }
-        public PriorityFillDto PriorityFill { get; set; }
-        public ZoneDto Zone { get; set; }
+        public string DepartmentName { get; set; }
+        public ICollection<OutOfStockDto> outOfStocks { get; set; }
+        public ICollection<PriorityFillDto> PriorityFill { get; set; }
+        public ICollection<ZoneDto> Zones { get; set; }
 
         public UserForDisplayDto TeamMember { get; set; }
        
