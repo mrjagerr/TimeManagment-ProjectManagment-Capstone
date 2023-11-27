@@ -45,9 +45,9 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // GET api/<DailyProjectsController>/5
-        [HttpGet("CurrentDaysProjects/{dateTime}/{department}")]
+        [HttpGet("CurrentDaysProjects/{dateTime}/{department}/{firstName}")]
 
-        public IActionResult GetbyDepartmentDate(DateTime dateTime,string department)
+        public IActionResult GetbyDepartmentDate(DateTime dateTime,string department, string firstName)
         {
             try
             {
@@ -58,16 +58,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 //retrieves the project linked to the date
 
                
-                var outOfStocks = _context.OutOfStocks.Where(c=> c.ProjectDate.Equals(dateTime) && c.DepartmentName == department);
-                var priorityFill = _context.PriorityFills.Where(c => c.ProjectDate.Equals(dateTime) && c.DepartmentName.Equals(department));
-                var zone= _context.Zones.Where(c => c.ProjectDate == dateTime && c.DepartmentName == department).Select( c=> new ZoneDto
-                {
-                    AreaToZone = c.AreaToZone,
-                    DepartmentName = c.DepartmentName,
-                    WorkloadValue = c.WorkloadValue,
-                    ProjectDate = c.ProjectDate,
-
-                });
+                
 
                 var todaysProject = _context.DailyProjects.Where(c => c.ProjectDate == dateTime && c.DepartmentName == department).Select(d => new DailyProjectWithZoneOOSPrioDto
                 {
@@ -93,18 +84,23 @@ namespace FullStackAuth_WebAPI.Controllers
                     }) . ToList(), 
                     outOfStocks = _context.OutOfStocks.Where(c => c.ProjectDate == dateTime && c.DepartmentName == department).Select( c=> new OutOfStockDto
                     {
-                        TotalOosFill = c.TotalOosFill,
-                        TotalOosRemaining = c.OosRemaining,
+                       TotalOosFill = c.TotalOosFill,
+                       TotalOosRemaining =c.OosRemaining, 
                         DepartmentName = c.DepartmentName,
                         ProjectDate = c.ProjectDate,
-
+                  
                         WorkLoadValue = c.WorkLoadValue
 
-                    }) . ToList(), 
+                    }).ToList(),
+                   TeamMember = _context.Users.Where(c => c.FirstName ==firstName).Select(c => new UserForDisplayDto
+                   {
+                       FirstName = c.FirstName,
+                       LastName = c.LastName,
+                       isTeamLead =c.isTeamLead
+                   }).ToList()
 
 
-
-                }) ;
+                }); 
                 if (todaysProject == null)
                 {
                     return NotFound();
