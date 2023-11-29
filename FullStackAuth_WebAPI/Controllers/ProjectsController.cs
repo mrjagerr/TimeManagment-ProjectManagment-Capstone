@@ -62,7 +62,57 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
                 // Retrieve all cars that belong to the authenticated user, including the owner object
-                var currentProjects = _context.Projects.Where(c => c.ProjectDate.Equals(dateTime));
+                var currentProjects = _context.Projects.Where(c => c.ProjectDate.Equals(dateTime)).Select(d => new ProjectWithAllShiftsDto
+                {
+                    Id = d.Id,
+                    ProjectDate = d.ProjectDate,
+                    Shift = _context.Shifts.Select(d => new ShiftWithAllDailyProjectsDto
+                    {
+                        TeamMemberFirstName = d.TeamMemberFirstName,
+                        ShiftDuration = d.ShiftDuration,
+                        DailyProject = _context.DailyProjects.Select(d => new DailyProjectWithZoneOOSPrioDto
+                        {
+                            Id = d.Id,
+                            ProjectDate = d.ProjectDate,
+                            DepartmentName = d.DepartmentName,
+                            Zones = _context.Zones.Select(c => new ZoneDto
+                            {
+                                AreaToZone = c.AreaToZone,
+                                DepartmentName = c.DepartmentName,
+                                WorkloadValue = c.WorkloadValue,
+                                ProjectDate = c.ProjectDate,
+
+                            }).ToList(),
+                            PriorityFill = _context.PriorityFills.Select(c => new PriorityFillDto
+                            {
+                                PriorityRemaining = c.PriorityRemaining,
+                                DepartmentName = c.DepartmentName,
+                                ProjectDate = c.ProjectDate,
+                                TotalPriorityFill = c.TotalPriorityFill,
+                                WorkLoadValue = c.WorkLoadValue
+
+                            }).ToList(),
+                            outOfStocks = _context.OutOfStocks.Select(c => new OutOfStockDto
+                            {
+                                TotalOosFill = c.TotalOosFill,
+                                TotalOosRemaining = c.OosRemaining,
+                                DepartmentName = c.DepartmentName,
+                                ProjectDate = c.ProjectDate,
+
+                                WorkLoadValue = c.WorkLoadValue
+
+                            }).ToList(),
+                        }).ToList(),
+
+                    }).ToList(),
+
+                    
+                  
+                    ProjectName = d.ProjectName,
+                    TotalWorkloadRequired = d.TotalWorkloadRequired,
+                    WorkLoadAllocation = d.WorkLoadAllocation,  
+
+                });
 
                 // Return the list of cars as a 200 OK response
                 return StatusCode(200, currentProjects);

@@ -91,12 +91,7 @@ namespace FullStackAuth_WebAPI.Controllers
                         WorkLoadValue = c.WorkLoadValue
 
                     }).ToList(),
-                   TeamMember = _context.Users.Where(c => c.FirstName ==firstName).Select(c => new UserForDisplayDto
-                   {
-                       FirstName = c.FirstName,
-                       LastName = c.LastName,
-                       isTeamLead =c.isTeamLead
-                   }).ToList()
+                 
 
 
                 }); 

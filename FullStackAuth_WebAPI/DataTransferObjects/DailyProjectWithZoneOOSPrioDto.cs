@@ -14,7 +14,7 @@ namespace FullStackAuth_WebAPI.DataTransferObjects
         public ICollection<PriorityFillDto> PriorityFill { get; set; }
         public ICollection<ZoneDto> Zones { get; set; }
 
-        public ICollection<UserForDisplayDto>  TeamMember { get; set; }
+       
        
 
     }
