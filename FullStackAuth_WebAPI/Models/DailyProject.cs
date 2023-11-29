@@ -21,11 +21,11 @@ namespace FullStackAuth_WebAPI.Models
         public ICollection<PriorityFill> PriorityFill { get; set; }
         public ICollection<OutOfStocks> OutOfStocks { get; set;}
 
+        [ForeignKey("Shift")]
+        public int ShiftId { get; set; }
+
+        public Shift Shift { get; set; }
 
 
-        [ForeignKey("Owner")]
-        public string OwnerId { get; set; }
-
-        public User Owner { get; set; }
     }
 }

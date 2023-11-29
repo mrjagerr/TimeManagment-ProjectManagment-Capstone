@@ -20,8 +20,9 @@ namespace FullStackAuth_WebAPI.Models
 
         [Required]
         public int TotalWorkloadRequired { get; set; }
-       
-        public int ProjectId { get; set; }
+        public ICollection<Shift> Shift { get; set; }
+
+
 
 
 

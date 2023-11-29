@@ -24,7 +24,9 @@ namespace FullStackAuth_WebAPI.Models
         [Required]
         public DateTime ProjectDate { get; set; }
 
-    
-     
+
+        [ForeignKey(" Dailyproject")]
+        public int DailyProjectId { get; set; }
+        public DailyProject DailyProject { get; set; }
     }
 }

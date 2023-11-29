@@ -8,13 +8,14 @@ namespace FullStackAuth_WebAPI.Models
 
         [Key]
         public int Id { get; set; }
-        public string UserName {  get; set; }
+        public string TeamMemberFirstName {  get; set; }
         public int ShiftDuration { get; set; }
+        public ICollection<DailyProject> DailyProject { get; set; }
 
 
-        [ForeignKey("Owner")]
-        public string OwnerId { get; set; }
+        [ForeignKey("Project")]
+        public int ProjectId { get; set; }
 
-        public User Owner { get; set; }
+        public Project Project { get; set; }
     }
 }

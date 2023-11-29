@@ -24,18 +24,17 @@ namespace FullStackAuth_WebAPI.Controllers
         }
         // GET: api/<DailyProjectsController>
         [HttpGet]
-        public IActionResult GetAllOutOfStocks()
+        public IActionResult GetAllDailyProjects()
         {
             try
             {
-                //Includes entire Owner object--insecure!
-                //var cars = _context.Cars.Include(c => c.Owner).ToList();
+                
 
 
                 var dailyProjects = _context.DailyProjects.ToList();
 
-                // Return the list of cars as a 200 OK response
-                return StatusCode(200, dailyProjects);
+                
+                return Ok(dailyProjects);
             }
             catch (Exception ex)
             {

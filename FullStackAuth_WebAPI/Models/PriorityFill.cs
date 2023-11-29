@@ -27,5 +27,11 @@ namespace FullStackAuth_WebAPI.Models
 
 
 
+        [ForeignKey(" Dailyproject")]
+        public int DailyProjectId { get; set; }
+        public DailyProject DailyProject { get; set; }
+
+
+
     }
 }

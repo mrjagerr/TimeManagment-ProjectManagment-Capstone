@@ -41,7 +41,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 var projects = _context.Projects.ToList();
 
                 // Return the list of cars as a 200 OK response
-                return StatusCode(200, projects);
+                return Ok( projects);
             }
             catch (Exception ex)
             {
@@ -93,6 +93,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
                 // Set the car's owner ID  the authenticated user's ID we found earlier
                 data.OwnerId = userId;
+                
 
                 // Add the car to the database and save changes
                 _context.Projects.Add(data);

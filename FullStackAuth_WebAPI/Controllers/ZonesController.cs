@@ -68,6 +68,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
                 // Set the car's owner ID  the authenticated user's ID we found earlier
                 data.DepartmentName = data.DepartmentName;
+                
 
                 // Add the car to the database and save changes
                 _context.Zones.Add(data);

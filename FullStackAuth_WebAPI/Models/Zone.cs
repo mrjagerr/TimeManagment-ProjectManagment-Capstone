@@ -19,7 +19,9 @@ namespace FullStackAuth_WebAPI.Models
         [Required]
         public string DepartmentName { get; set; }
 
-
+        [ForeignKey(" Dailyproject")]
+        public int DailyProjectId { get; set; }
+        public DailyProject DailyProject { get; set; }
 
 
 

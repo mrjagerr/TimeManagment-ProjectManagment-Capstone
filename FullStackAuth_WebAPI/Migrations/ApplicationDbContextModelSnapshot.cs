@@ -56,18 +56,18 @@ namespace FullStackAuth_WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<DateTime>("ProjectDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("ShiftId")
+                        .HasColumnType("int");
 
                     b.Property<int>("TotalHoursForSingleProject")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("ShiftId");
 
                     b.ToTable("DailyProjects");
                 });
@@ -78,7 +78,7 @@ namespace FullStackAuth_WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("DailyProjectId")
+                    b.Property<int>("DailyProjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("DepartmentName")
@@ -110,7 +110,7 @@ namespace FullStackAuth_WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("DailyProjectId")
+                    b.Property<int>("DailyProjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("DepartmentName")
@@ -148,9 +148,6 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.Property<DateTime>("ProjectDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProjectName")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -174,18 +171,18 @@ namespace FullStackAuth_WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ShiftDuration")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("TeamMemberFirstName")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Shifts");
                 });
@@ -273,7 +270,7 @@ namespace FullStackAuth_WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("DailyProjectId")
+                    b.Property<int>("DailyProjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("DepartmentName")
@@ -321,13 +318,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ebf560b7-9744-4fb4-8b26-8181ac74b589",
+                            Id = "1e22dc5a-36e8-4ab8-ac0b-e64fb0dc576c",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "c54aef31-2cae-4a14-92d2-cbf960a2cbf8",
+                            Id = "a9f75993-c843-4cdc-a166-4e75badee056",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -446,25 +443,35 @@ namespace FullStackAuth_WebAPI.Migrations
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.DailyProject", b =>
                 {
-                    b.HasOne("FullStackAuth_WebAPI.Models.User", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
+                    b.HasOne("FullStackAuth_WebAPI.Models.Shift", "Shift")
+                        .WithMany("DailyProject")
+                        .HasForeignKey("ShiftId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Owner");
+                    b.Navigation("Shift");
                 });
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.OutOfStocks", b =>
                 {
-                    b.HasOne("FullStackAuth_WebAPI.Models.DailyProject", null)
+                    b.HasOne("FullStackAuth_WebAPI.Models.DailyProject", "DailyProject")
                         .WithMany("OutOfStocks")
-                        .HasForeignKey("DailyProjectId");
+                        .HasForeignKey("DailyProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DailyProject");
                 });
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.PriorityFill", b =>
                 {
-                    b.HasOne("FullStackAuth_WebAPI.Models.DailyProject", null)
+                    b.HasOne("FullStackAuth_WebAPI.Models.DailyProject", "DailyProject")
                         .WithMany("PriorityFill")
-                        .HasForeignKey("DailyProjectId");
+                        .HasForeignKey("DailyProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DailyProject");
                 });
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.Project", b =>
@@ -478,18 +485,24 @@ namespace FullStackAuth_WebAPI.Migrations
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.Shift", b =>
                 {
-                    b.HasOne("FullStackAuth_WebAPI.Models.User", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
+                    b.HasOne("FullStackAuth_WebAPI.Models.Project", "Project")
+                        .WithMany("Shift")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Owner");
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("FullStackAuth_WebAPI.Models.Zone", b =>
                 {
-                    b.HasOne("FullStackAuth_WebAPI.Models.DailyProject", null)
+                    b.HasOne("FullStackAuth_WebAPI.Models.DailyProject", "DailyProject")
                         .WithMany("Zone")
-                        .HasForeignKey("DailyProjectId");
+                        .HasForeignKey("DailyProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DailyProject");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -550,6 +563,16 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.Navigation("PriorityFill");
 
                     b.Navigation("Zone");
+                });
+
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.Project", b =>
+                {
+                    b.Navigation("Shift");
+                });
+
+            modelBuilder.Entity("FullStackAuth_WebAPI.Models.Shift", b =>
+                {
+                    b.Navigation("DailyProject");
                 });
 #pragma warning restore 612, 618
         }

@@ -30,7 +30,6 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
                 var shifts = _context.Shifts.ToList();
-
                 // Return the list of cars as a 200 OK response
                 return StatusCode(200, shifts);
             }
@@ -42,13 +41,13 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // GET api/<ShiftsController>/5
-        [HttpGet("{userName}")]
-        public IActionResult Get(string userName)
+        [HttpGet("{teamMemberFirstName}")]
+        public IActionResult Get(string teamMemberFirstName)
         {
             try
             {
                 // Retrieve the car with the specified ID, including the owner object
-                var shifts = _context.Shifts.Where(c => c.UserName == userName).ToList();
+                var shifts = _context.Shifts.Where(c => c.TeamMemberFirstName == teamMemberFirstName).ToList();
 
                 // If the car does not exist, return a 404 not found response
                 if (shifts == null)
@@ -74,6 +73,7 @@ namespace FullStackAuth_WebAPI.Controllers
             {
                 // Retrieve the authenticated user's ID from the JWT token
                 string userId = User.FindFirstValue("id");
+               
 
 
                 // If the user ID is null or empty, the user is not authenticated, so return a 401 unauthorized response
@@ -84,7 +84,8 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
                 // Set the car's owner ID  the authenticated user's ID we found earlier
-                data.OwnerId = userId;
+               
+               
 
                 // Add the car to the database and save changes
                 _context.Shifts.Add(data);
