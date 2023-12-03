@@ -8,7 +8,7 @@ namespace FullStackAuth_WebAPI.DataTransferObjects
         public string TeamMemberFirstName { get; set; }
         public int ShiftDuration { get; set; }
         public string DepartmentName { get; set; }
-        public DateTime ShiftDate { get; set; }
+        public string ShiftDate { get; set; }
         public int WorkLoadValue { get; set; }
         public int PriorityFill { get; set; }
         public int OutOfStock { get; set; }

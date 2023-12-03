@@ -12,7 +12,7 @@ namespace FullStackAuth_WebAPI.Models
         public int ShiftDuration { get; set; }
         [Required]
         public string DepartmentName { get; set; }
-        public DateTime ShiftDate { get; set; }
+        public string ShiftDate { get; set; }
         [Required]
         public int WorkLoadValue { get; set; }
         [Required]

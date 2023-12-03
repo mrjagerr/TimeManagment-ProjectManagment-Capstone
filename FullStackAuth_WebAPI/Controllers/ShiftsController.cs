@@ -42,7 +42,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
         // GET api/<ShiftsController>/5
         [HttpGet("{dateTime}")]
-        public IActionResult GetbyTeamMember(DateTime dateTime)
+        public IActionResult GetbyTeamMember(string dateTime)
         {
             try
             {
@@ -65,6 +65,7 @@ namespace FullStackAuth_WebAPI.Controllers
             catch (Exception ex)
             {
                 // If an error occurs, return a 500 internal server error with the error message
+                
                 return StatusCode(500, ex.Message);
             }
         }
@@ -97,6 +98,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 _context.Shifts.Add(data);
                 if (!ModelState.IsValid)
                 {
+                    Console.WriteLine("Please fill out all info");
                     // If the car model state is invalid, return a 400 bad request response with the model state errors
                     return BadRequest(ModelState);
                 }
@@ -106,7 +108,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 return StatusCode(201, data);
             }
             catch (Exception ex)
-            {
+            {Console.WriteLine("Please fill out all info");
                 // If an error occurs, return a 500 internal server error with the error message
                 return StatusCode(500, ex.Message);
             }

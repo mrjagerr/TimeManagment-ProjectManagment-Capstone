@@ -13,7 +13,7 @@ namespace FullStackAuth_WebAPI.Models
         public string ProjectName { get; set; }
 
         [Required]
-        public DateTime ProjectDate { get; set; }
+        public string ProjectDate { get; set; }
 
         [Required]
         public int WorkLoadAllocation { get; set; }

@@ -53,7 +53,7 @@ namespace FullStackAuth_WebAPI.Controllers
         // GET api/<ProjectsController>/5
         [HttpGet("CurrentDaysProjects/{dateTime}")]
        
-        public IActionResult GetCurrentDaysProject(DateTime dateTime)
+        public IActionResult GetCurrentDaysProject(string dateTime)
         {
             try
             {
@@ -62,11 +62,11 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
                 // Retrieve all cars that belong to the authenticated user, including the owner object
-                var currentProjects = _context.Projects.Where(c => c.ProjectDate.Equals(dateTime)).Select(d => new ProjectWithAllShiftsDto
+                var currentProjects = _context.Projects.Where(c => c.ProjectDate == dateTime).ToList();/*.Select(d => new ProjectWithAllShiftsDto
                 {
                     Id = d.Id,
                     ProjectDate = d.ProjectDate,
-                    ShiftForDisplays = _context.Shifts.Select(c => new ShiftForDisplayDto
+                   *//* ShiftForDisplays = _context.Shifts.Where(c => c.ShiftDate.Equals(dateTime)).Select(c => new ShiftForDisplayDto
                     {
                         DepartmentName = c.DepartmentName,
                         ShiftDate = c.ShiftDate,
@@ -77,7 +77,7 @@ namespace FullStackAuth_WebAPI.Controllers
                         WorkLoadValue = c.WorkLoadValue,
                         Id = c.Id,
                         Zone = c.Zone,
-                    }).ToList(),
+                    }).ToList(),*//*
                     WorkLoadAllocation = d.WorkLoadAllocation,
                     TotalWorkloadRequired = d.TotalWorkloadRequired,
                     ProjectName = d.ProjectName,
@@ -85,7 +85,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
 
-                }) ;
+                }) ;*/
 
                 // Return the list of cars as a 200 OK response
                 return StatusCode(200, currentProjects);
@@ -116,6 +116,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
                 // Set the car's owner ID  the authenticated user's ID we found earlier
                 data.OwnerId = userId;
+                data.ProjectDate = data.ProjectDate;
                 
 
                 // Add the car to the database and save changes
