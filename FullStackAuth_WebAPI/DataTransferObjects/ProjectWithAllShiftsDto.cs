@@ -10,6 +10,7 @@ namespace FullStackAuth_WebAPI.DataTransferObjects
         public DateTime ProjectDate { get; set; }
         public int WorkLoadAllocation { get; set; }
         public int TotalWorkloadRequired { get; set; }
-        public ICollection<ShiftWithAllDailyProjectsDto> Shift { get; set; }
+        public ICollection<ShiftForDisplayDto> ShiftForDisplays { get; set;}
     }
+       
 }

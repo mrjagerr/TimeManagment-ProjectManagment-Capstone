@@ -53,7 +53,7 @@ namespace FullStackAuth_WebAPI.Controllers
         // GET api/<ProjectsController>/5
         [HttpGet("CurrentDaysProjects/{dateTime}")]
        
-        public IActionResult GetUsersCars(DateTime dateTime)
+        public IActionResult GetCurrentDaysProject(DateTime dateTime)
         {
             try
             {
@@ -66,53 +66,26 @@ namespace FullStackAuth_WebAPI.Controllers
                 {
                     Id = d.Id,
                     ProjectDate = d.ProjectDate,
-                    Shift = _context.Shifts.Select(d => new ShiftWithAllDailyProjectsDto
+                    ShiftForDisplays = _context.Shifts.Select(c => new ShiftForDisplayDto
                     {
-                        TeamMemberFirstName = d.TeamMemberFirstName,
-                        ShiftDuration = d.ShiftDuration,
-                        DailyProject = _context.DailyProjects.Select(d => new DailyProjectWithZoneOOSPrioDto
-                        {
-                            Id = d.Id,
-                            ProjectDate = d.ProjectDate,
-                            DepartmentName = d.DepartmentName,
-                            Zones = _context.Zones.Select(c => new ZoneDto
-                            {
-                                AreaToZone = c.AreaToZone,
-                                DepartmentName = c.DepartmentName,
-                                WorkloadValue = c.WorkloadValue,
-                                ProjectDate = c.ProjectDate,
-
-                            }).ToList(),
-                            PriorityFill = _context.PriorityFills.Select(c => new PriorityFillDto
-                            {
-                                PriorityRemaining = c.PriorityRemaining,
-                                DepartmentName = c.DepartmentName,
-                                ProjectDate = c.ProjectDate,
-                                TotalPriorityFill = c.TotalPriorityFill,
-                                WorkLoadValue = c.WorkLoadValue
-
-                            }).ToList(),
-                            outOfStocks = _context.OutOfStocks.Select(c => new OutOfStockDto
-                            {
-                                TotalOosFill = c.TotalOosFill,
-                                TotalOosRemaining = c.OosRemaining,
-                                DepartmentName = c.DepartmentName,
-                                ProjectDate = c.ProjectDate,
-
-                                WorkLoadValue = c.WorkLoadValue
-
-                            }).ToList(),
-                        }).ToList(),
-
+                        DepartmentName = c.DepartmentName,
+                        ShiftDate = c.ShiftDate,
+                        OutOfStock = c.OutOfStock,
+                        PriorityFill = c.PriorityFill,
+                        ShiftDuration = c.ShiftDuration,
+                        TeamMemberFirstName = c.TeamMemberFirstName,
+                        WorkLoadValue = c.WorkLoadValue,
+                        Id = c.Id,
+                        Zone = c.Zone,
                     }).ToList(),
-
-                    
-                  
-                    ProjectName = d.ProjectName,
+                    WorkLoadAllocation = d.WorkLoadAllocation,
                     TotalWorkloadRequired = d.TotalWorkloadRequired,
-                    WorkLoadAllocation = d.WorkLoadAllocation,  
+                    ProjectName = d.ProjectName,
 
-                });
+
+
+
+                }) ;
 
                 // Return the list of cars as a 200 OK response
                 return StatusCode(200, currentProjects);

@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace FullStackAuth_WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialFinal : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -225,6 +225,12 @@ namespace FullStackAuth_WebAPI.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     TeamMemberFirstName = table.Column<string>(type: "longtext", nullable: true),
                     ShiftDuration = table.Column<int>(type: "int", nullable: false),
+                    DepartmentName = table.Column<string>(type: "longtext", nullable: false),
+                    ShiftDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    WorkLoadValue = table.Column<int>(type: "int", nullable: false),
+                    PriorityFill = table.Column<int>(type: "int", nullable: false),
+                    OutOfStock = table.Column<int>(type: "int", nullable: false),
+                    Zone = table.Column<string>(type: "longtext", nullable: false),
                     ProjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -239,110 +245,13 @@ namespace FullStackAuth_WebAPI.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "DailyProjects",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    DepartmentName = table.Column<string>(type: "longtext", nullable: false),
-                    TotalHoursForSingleProject = table.Column<int>(type: "int", nullable: false),
-                    ProjectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ShiftId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DailyProjects", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DailyProjects_Shifts_ShiftId",
-                        column: x => x.ShiftId,
-                        principalTable: "Shifts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "OutOfStocks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    DepartmentName = table.Column<string>(type: "longtext", nullable: false),
-                    WorkLoadValue = table.Column<int>(type: "int", nullable: false),
-                    TotalOosFill = table.Column<int>(type: "int", nullable: false),
-                    OosRemaining = table.Column<int>(type: "int", nullable: false),
-                    ProjectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DailyProjectId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OutOfStocks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OutOfStocks_DailyProjects_DailyProjectId",
-                        column: x => x.DailyProjectId,
-                        principalTable: "DailyProjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "PriorityFills",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    DepartmentName = table.Column<string>(type: "longtext", nullable: false),
-                    WorkLoadValue = table.Column<int>(type: "int", nullable: false),
-                    TotalPriorityFill = table.Column<int>(type: "int", nullable: false),
-                    PriorityRemaining = table.Column<int>(type: "int", nullable: false),
-                    ProjectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DailyProjectId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PriorityFills", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PriorityFills_DailyProjects_DailyProjectId",
-                        column: x => x.DailyProjectId,
-                        principalTable: "DailyProjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Zones",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    AreaToZone = table.Column<string>(type: "longtext", nullable: false),
-                    WorkloadValue = table.Column<int>(type: "int", nullable: false),
-                    ProjectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DepartmentName = table.Column<string>(type: "longtext", nullable: false),
-                    DailyProjectId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Zones", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Zones_DailyProjects_DailyProjectId",
-                        column: x => x.DailyProjectId,
-                        principalTable: "DailyProjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1e22dc5a-36e8-4ab8-ac0b-e64fb0dc576c", null, "User", "USER" },
-                    { "a9f75993-c843-4cdc-a166-4e75badee056", null, "Admin", "ADMIN" }
+                    { "57f471d8-a724-46af-933f-e7e8ddb294d0", null, "Admin", "ADMIN" },
+                    { "eb496028-fb2e-491c-ba28-50586edda95e", null, "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -388,21 +297,6 @@ namespace FullStackAuth_WebAPI.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DailyProjects_ShiftId",
-                table: "DailyProjects",
-                column: "ShiftId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OutOfStocks_DailyProjectId",
-                table: "OutOfStocks",
-                column: "DailyProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PriorityFills_DailyProjectId",
-                table: "PriorityFills",
-                column: "DailyProjectId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Projects_OwnerId",
                 table: "Projects",
                 column: "OwnerId");
@@ -411,11 +305,6 @@ namespace FullStackAuth_WebAPI.Migrations
                 name: "IX_Shifts_ProjectId",
                 table: "Shifts",
                 column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Zones_DailyProjectId",
-                table: "Zones",
-                column: "DailyProjectId");
         }
 
         /// <inheritdoc />
@@ -440,22 +329,10 @@ namespace FullStackAuth_WebAPI.Migrations
                 name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "OutOfStocks");
-
-            migrationBuilder.DropTable(
-                name: "PriorityFills");
-
-            migrationBuilder.DropTable(
-                name: "Zones");
+                name: "Shifts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "DailyProjects");
-
-            migrationBuilder.DropTable(
-                name: "Shifts");
 
             migrationBuilder.DropTable(
                 name: "Projects");

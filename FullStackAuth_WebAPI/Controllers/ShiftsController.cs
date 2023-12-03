@@ -41,22 +41,26 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // GET api/<ShiftsController>/5
-        [HttpGet("{teamMemberFirstName}")]
-        public IActionResult Get(string teamMemberFirstName)
+        [HttpGet("{dateTime}")]
+        public IActionResult GetbyTeamMember(DateTime dateTime)
         {
             try
             {
                 // Retrieve the car with the specified ID, including the owner object
-                var shifts = _context.Shifts.Where(c => c.TeamMemberFirstName == teamMemberFirstName).ToList();
+               
+                var shiftsDate = _context.Shifts.Where(c => c.ShiftDate== dateTime).ToList();
 
                 // If the car does not exist, return a 404 not found response
-                if (shifts == null)
+               
+                if(shiftsDate == null)
                 {
                     return NotFound();
                 }
+                 return StatusCode(200, shiftsDate);
+                
+               
 
-                // Return the car as a 200 OK response
-                return StatusCode(200,shifts);
+
             }
             catch (Exception ex)
             {
@@ -64,6 +68,8 @@ namespace FullStackAuth_WebAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        // GET api/<ShiftsController>/5
+       
 
         // POST api/<ShiftsController>
         [HttpPost, Authorize(Roles = "Admin")]
