@@ -11,7 +11,7 @@ namespace FullStackAuth_WebAPI.Data
         public DbSet<Project> Projects { get; set; }
      
         public DbSet<Shift> Shifts { get; set; }
-   
+   public DbSet<User> Employees {  get; set; }
         public ApplicationDbContext(DbContextOptions options)
     : base(options)
         {
