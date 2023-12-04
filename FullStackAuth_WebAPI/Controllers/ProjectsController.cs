@@ -61,12 +61,12 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
 
-                // Retrieve all cars that belong to the authenticated user, including the owner object
-                var currentProjects = _context.Projects.Where(c => c.ProjectDate == dateTime).ToList();/*.Select(d => new ProjectWithAllShiftsDto
+                // Retrieves all projects and those assigned to that project
+                var currentProjects = _context.Projects.Where(c => c.ProjectDate == dateTime).Select(d => new ProjectWithAllShiftsDto
                 {
                     Id = d.Id,
                     ProjectDate = d.ProjectDate,
-                   *//* ShiftForDisplays = _context.Shifts.Where(c => c.ShiftDate.Equals(dateTime)).Select(c => new ShiftForDisplayDto
+                   ShiftForDisplays = _context.Shifts.Where(c => c.ShiftDate.Equals(dateTime)).Select(c => new ShiftForDisplayDto
                     {
                         DepartmentName = c.DepartmentName,
                         ShiftDate = c.ShiftDate,
@@ -77,7 +77,7 @@ namespace FullStackAuth_WebAPI.Controllers
                         WorkLoadValue = c.WorkLoadValue,
                         Id = c.Id,
                         Zone = c.Zone,
-                    }).ToList(),*//*
+                    }).ToList(),
                     WorkLoadAllocation = d.WorkLoadAllocation,
                     TotalWorkloadRequired = d.TotalWorkloadRequired,
                     ProjectName = d.ProjectName,
@@ -85,9 +85,9 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
 
-                }) ;*/
+                }) ;
 
-                // Return the list of cars as a 200 OK response
+                //returns current projects
                 return StatusCode(200, currentProjects);
             }
             catch (Exception ex)
@@ -114,7 +114,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 }
                
 
-                // Set the car's owner ID  the authenticated user's ID we found earlier
+                // Set the projects's owner ID  the authenticated user's ID we found earlier
                 data.OwnerId = userId;
                 data.ProjectDate = data.ProjectDate;
                 
@@ -139,14 +139,14 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // PUT api/<ProjectsController>/5
-        [HttpPut("{projectName}"), Authorize(Roles = "Admin")]
-        public IActionResult Put(string projectName, [FromBody] Project data)
+        [HttpPut("{projectName}/{date}"), Authorize(Roles = "Admin")]
+        public IActionResult Put(string projectName,string date, [FromBody] Project data)
         {
             try
             {
                 string userId = User.FindFirstValue("id");
                 // Find the car to be updated
-                Project project  = _context.Projects.FirstOrDefault(c => c.ProjectName == projectName);
+                Project project = _context.Projects.FirstOrDefault(c => c.ProjectDate == date && c.ProjectName==projectName);
 
                 if (project == null)
                 {
