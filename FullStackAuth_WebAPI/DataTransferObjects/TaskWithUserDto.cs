@@ -6,6 +6,6 @@
         public int Id { get; set; }
         public string Goal { get; set; }
         public  string GoalAssignedTo { get; set; }
-        public ICollection <UserForDisplayDto> TeamMember { get; set; }
+        public UserForDisplayDto Poster { get; set; }
     }
 }

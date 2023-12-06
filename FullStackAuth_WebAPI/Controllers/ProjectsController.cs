@@ -66,6 +66,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 {
                     Id = d.Id,
                     ProjectDate = d.ProjectDate,
+                    WorkLoadCompleted =d.WorkloadCompleted,
                    ShiftForDisplays = _context.Shifts.Where(c => c.ShiftDate.Equals(dateTime)).Select(c => new ShiftForDisplayDto
                     {
                         DepartmentName = c.DepartmentName,
@@ -81,6 +82,8 @@ namespace FullStackAuth_WebAPI.Controllers
                     WorkLoadAllocation = d.WorkLoadAllocation,
                     TotalWorkloadRequired = d.TotalWorkloadRequired,
                     ProjectName = d.ProjectName,
+                    PercentCompleted = d.PercentCompleted,
+                   
 
 
 
@@ -168,6 +171,48 @@ namespace FullStackAuth_WebAPI.Controllers
                 project.WorkLoadAllocation = data.WorkLoadAllocation;
                 project.TotalWorkloadRequired = data.TotalWorkloadRequired;
               
+
+                if (!ModelState.IsValid)
+                {
+                    // Return a 400 Bad Request error if the request data is invalid
+                    return BadRequest(ModelState);
+                }
+                _context.SaveChanges();
+
+                // Return a 201 Created status code and the updated car object
+                return StatusCode(201, project);
+            }
+            catch (Exception ex)
+            {
+                // Return a 500 Internal Server Error with the error message if an exception occurs
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Project data)
+        {
+            try
+            {
+                // Find the car to be updated
+               Project  project = _context.Projects.FirstOrDefault(c => c.Id == id);
+
+                if (project == null)
+                {
+                    // Return a 404 Not Found error if the car with the specified ID does not exist
+                    return NotFound();
+                }
+
+              
+
+                 project.WorkloadCompleted += data.WorkloadCompleted;
+                
+                double workload = project.WorkloadCompleted;
+                double totalWorkload = project.TotalWorkloadRequired;
+                double  percent = workload / totalWorkload * 100;
+                project.PercentCompleted = percent;
+                
+              
+                
 
                 if (!ModelState.IsValid)
                 {

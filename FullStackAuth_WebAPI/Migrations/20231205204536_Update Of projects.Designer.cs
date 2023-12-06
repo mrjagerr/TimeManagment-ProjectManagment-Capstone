@@ -3,6 +3,7 @@ using System;
 using FullStackAuth_WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullStackAuth_WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231205204536_Update Of projects")]
+    partial class UpdateOfprojects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,9 +57,6 @@ namespace FullStackAuth_WebAPI.Migrations
 
                     b.Property<string>("OwnerId")
                         .HasColumnType("varchar(255)");
-
-                    b.Property<double>("PercentCompleted")
-                        .HasColumnType("double");
 
                     b.Property<string>("ProjectDate")
                         .IsRequired()
@@ -249,13 +249,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "507d2745-14bc-49b4-85c3-776978abaee2",
+                            Id = "896b6334-3ab8-42c9-a216-cab4150938bc",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "2a50508f-c1d4-4590-89f3-423e6609188e",
+                            Id = "00bab50a-f35e-44d1-924c-19cc8bb6b364",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

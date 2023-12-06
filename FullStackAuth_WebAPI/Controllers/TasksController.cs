@@ -28,19 +28,19 @@ namespace FullStackAuth_WebAPI.Controllers
                 string userId = User.FindFirstValue("id");
 
                 //Retrieve all cars from the database, using Dtos
-                var tasks = _context.Tasks.Select(c => new TaskWithUserDto
+                var tasks = _context.Tasks.Select(t => new TaskWithUserDto
                 {
-                    Id = c.Id,
-                    Goal = c.Goal,
-                    GoalAssignedTo = c.GoalAssignedTo,
-                    TeamMember = _context.Users.Where(c => c.Id == userId).Select(c => new UserForDisplayDto
-                    {
-                        Id = c.Id,
-                        FirstName = c.FirstName,
-                        LastName = c.LastName,
-                        UserName = c.UserName,
-                    }).ToList(),
-                    
+                    Id = t.Id,
+                    Goal = t.Goal,
+                    GoalAssignedTo = t.GoalAssignedTo,
+                   Poster =  new UserForDisplayDto
+                   {
+                       Id= t.OwnerId,
+                       FirstName = t.Owner.FirstName,
+                       LastName = t.Owner.LastName, 
+                       
+                   }
+
 
                 }).ToList();
 
