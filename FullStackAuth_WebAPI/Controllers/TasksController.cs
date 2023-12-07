@@ -33,13 +33,13 @@ namespace FullStackAuth_WebAPI.Controllers
                     Id = t.Id,
                     Goal = t.Goal,
                     GoalAssignedTo = t.GoalAssignedTo,
-                   Poster =  new UserForDisplayDto
-                   {
-                       Id= t.OwnerId,
-                       FirstName = t.Owner.FirstName,
-                       LastName = t.Owner.LastName, 
-                       
-                   }
+                    Poster = new UserForDisplayDto
+                    {
+                        Id = t.OwnerId,
+                        FirstName = t.Owner.FirstName,
+                        LastName = t.Owner.LastName,
+
+                    }
 
 
                 }).ToList();
@@ -53,9 +53,9 @@ namespace FullStackAuth_WebAPI.Controllers
                 // If an error occurs, return a 500 internal server error with the error message
                 return StatusCode(500, ex.Message);
             }
-        
-    }
-      
+
+        }
+
 
         // POST api/<TasksController>
         [HttpPost, Authorize]
@@ -76,7 +76,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
 
                 // Set the car's owner ID  the authenticated user's ID we found earlier
-                 data.OwnerId = userId;
+                data.OwnerId = userId;
 
 
                 // Add the car to the database and save changes
@@ -107,8 +107,33 @@ namespace FullStackAuth_WebAPI.Controllers
 
         // DELETE api/<TasksController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                // Find the car to be deleted
+                TaskList task = _context.Tasks.FirstOrDefault(c => c.Id == id);
+                if (task == null)
+                {
+                    // Return a 404 Not Found error if the car with the specified ID does not exist
+                    return NotFound();
+                }
+
+                // Check if the authenticated user is the owner of the car
+
+
+                // Remove the car from the database
+                _context.Tasks.Remove(task);
+                _context.SaveChanges();
+
+                // Return a 204 No Content status code
+                return StatusCode(204);
+            }
+            catch (Exception ex)
+            {
+                // Return a 500 Internal Server Error with the error message if an exception occurs
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
