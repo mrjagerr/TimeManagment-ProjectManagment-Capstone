@@ -142,14 +142,14 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
         // PUT api/<ProjectsController>/5
-        [HttpPut("{projectName}/{date}"), Authorize(Roles = "Admin")]
-        public IActionResult Put(string projectName,string date, [FromBody] Project data)
+        [HttpPut("edit/{id}"), Authorize(Roles = "Admin")]
+        public IActionResult PutWorkLoad(int id, [FromBody] Project data)
         {
             try
             {
                 string userId = User.FindFirstValue("id");
                 // Find the car to be updated
-                Project project = _context.Projects.FirstOrDefault(c => c.ProjectDate == date && c.ProjectName==projectName);
+                Project project = _context.Projects.FirstOrDefault(c => c.Id == id);
 
                 if (project == null)
                 {
@@ -211,9 +211,12 @@ namespace FullStackAuth_WebAPI.Controllers
                 double  percent = workload / totalWorkload * 100;
                 percent = Math.Round(percent);
                 project.PercentCompleted = percent;
+
+
                 
-              
-                
+
+
+
 
                 if (!ModelState.IsValid)
                 {
