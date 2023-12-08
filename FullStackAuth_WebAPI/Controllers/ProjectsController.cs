@@ -40,7 +40,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
                 var projects = _context.Projects.ToList();
 
-                // Return the list of cars as a 200 OK response
+                // Return the list of projects as a 200 OK response
                 return Ok( projects);
             }
             catch (Exception ex)
@@ -131,7 +131,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 }
                 _context.SaveChanges();
 
-                // Return the newly created car as a 201 created response
+                // Return the newly created project as a 201 created response
                 return StatusCode(201, data);
             }
             catch (Exception ex)
@@ -148,7 +148,7 @@ namespace FullStackAuth_WebAPI.Controllers
             try
             {
                 string userId = User.FindFirstValue("id");
-                // Find the car to be updated
+                // Find the project to be updated
                 Project project = _context.Projects.FirstOrDefault(c => c.Id == id);
 
                 if (project == null)
@@ -165,7 +165,7 @@ namespace FullStackAuth_WebAPI.Controllers
                     return Unauthorized();
                 }
 
-                // Update the car properties
+                // Update the project properties
               
               
                 project.WorkLoadAllocation = data.WorkLoadAllocation;

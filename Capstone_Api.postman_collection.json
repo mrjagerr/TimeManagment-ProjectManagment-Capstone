@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "fd3ab918-f879-4567-97b7-7453eefd60e2",
+		"name": "Capstone_Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29363849"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Register_User",
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "role admin",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\": \"Bobby\",\r\n    \"lastname\": \"Bobson\",\r\n    \"username\": \"Bobby\",\r\n    \"password\": \"Qw12345^\",\r\n    \"email\": \"Bobby@bob.bob\",\r\n    \"isTeamLead\" : true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://localhost:5001/api/authentication"
+							},
+							"response": []
+						},
+						{
+							"name": "Login_User",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"bobby\",\r\n    \"password\": \"Qw12345^\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://localhost:5001/api/authentication/login"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Register_User",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Steve\",\r\n    \"lastname\": \"Bobson\",\r\n    \"username\": \"Steve\",\r\n    \"password\": \"Qw12345^\",\r\n    \"email\": \"Steve@bob.bob\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/authentication"
+					},
+					"response": []
+				},
+				{
+					"name": "Login_User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"steve\",\r\n    \"password\": \"Qw12345^\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/authentication/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "getAllProjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:5001/api/projects"
+					},
+					"response": []
+				},
+				{
+					"name": "PostTotalProjects",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IkJvYmJ5IiwiZW1haWwiOiJCb2JieUBib2IuYm9iIiwiaWQiOiI5MDViYjg2Ni1mYTdjLTQzYTktOTgxYy1kNmRmMGI3YzQyYjQiLCJmaXJzdE5hbWUiOiJCb2JieSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIlVzZXIiXSwiZXhwIjoxNzAyMDE0NTYxLCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.OIz1INlQpGDcfwyivHdIJg7BzJhXa-CDUon_VYOcXws",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "isTeamLead true",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"projectName\": \"ClosingRoutine\",\r\n   \"projectDate\" : \"2023-12-08\",\r\n   \"workLoadAllocation\": 1300,\r\n    \"totalWorkloadRequired\": 90\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/projects"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProjectRecs",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IkJvYmJ5IiwiZW1haWwiOiJCb2JieUBib2IuYm9iIiwiaWQiOiI5MDViYjg2Ni1mYTdjLTQzYTktOTgxYy1kNmRmMGI3YzQyYjQiLCJmaXJzdE5hbWUiOiJCb2JieSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIlVzZXIiXSwiZXhwIjoxNzAyMTE0MDE5LCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.J6QkJIJZ8kzFBiLbtWyrqmoNmSgJPJmxRSNjQls88FI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\"projectName\": \"ClosingRoutine\",\r\n   \"projectDate\" : \"2023-12-03\",\r\n   \"workLoadAllocation\":350,\r\n    \"totalWorkloadRequired\": 600\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/projects/edit/8"
+					},
+					"response": []
+				},
+				{
+					"name": "getCurrentProjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:5001/api/projects/CurrentDaysProjects/2023-12-03"
+					},
+					"response": []
+				},
+				{
+					"name": "update work progress",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"projectName\": \"ClosingRoutine\",\r\n   \"projectDate\" : \"2023-12-04\",\r\n   \"workloadCompleted\" : 160,\r\n   \"totalWorkloadRequired\": 1500\r\n   \r\n   \r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/projects/8"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shift",
+			"item": [
+				{
+					"name": "ShowShifts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:5001/api/shifts"
+					},
+					"response": []
+				},
+				{
+					"name": "PostShiftToTm",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IkJvYmJ5IiwiZW1haWwiOiJCb2JieUBib2IuYm9iIiwiaWQiOiI5MDViYjg2Ni1mYTdjLTQzYTktOTgxYy1kNmRmMGI3YzQyYjQiLCJmaXJzdE5hbWUiOiJCb2JieSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIlVzZXIiXSwiZXhwIjoxNzAyMDE0NTYxLCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.OIz1INlQpGDcfwyivHdIJg7BzJhXa-CDUon_VYOcXws",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n        \"teamMemberFirstName\": \"Marcus\",\r\n        \"shiftDuration\": 3,\r\n        \"departmentName\": \"Domestics\",\r\n        \"shiftDate\": \"2023-12-3T00:00:00\",\r\n        \"workLoadValue\": 2,\r\n        \"priorityFill\": 110,\r\n        \"outOfStock\": 30,\r\n        \"zone\": \"A's and C's\",\r\n        \"projectId\" : 5\r\n       \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/shifts"
+					},
+					"response": []
+				},
+				{
+					"name": "GetByUserName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:5001/api/shifts/myShifts/carl"
+					},
+					"response": []
+				},
+				{
+					"name": "GetByDate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:5001/api/shifts/2023-12-03"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TaskList",
+			"item": [
+				{
+					"name": "GetTasks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IkJvYmJ5IiwiZW1haWwiOiJCb2JieUBib2IuYm9iIiwiaWQiOiI5MDViYjg2Ni1mYTdjLTQzYTktOTgxYy1kNmRmMGI3YzQyYjQiLCJmaXJzdE5hbWUiOiJCb2JieSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIlVzZXIiXSwiZXhwIjoxNzAxOTczMDE3LCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ._KmugaZZgWCU7i0cJQKinYv64nP_dsvXYH6J4zKWd-k",
+								"type": "text"
+							}
+						],
+						"url": "https://localhost:5001/api/Tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "PostToList",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": " bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IkJvYmJ5IiwiZW1haWwiOiJCb2JieUBib2IuYm9iIiwiaWQiOiI5MDViYjg2Ni1mYTdjLTQzYTktOTgxYy1kNmRmMGI3YzQyYjQiLCJmaXJzdE5hbWUiOiJCb2JieSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIlVzZXIiXSwiZXhwIjoxNzAxNzk4NzM2LCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.1mPto3yeU_58l12wTuI7S_KDpQRTMuj6DwI53iYh3UM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"goal\" : \"Zone Toys\",\r\n    \"goalAssignedTo\" : \"Angel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/Tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "TaskComplete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://localhost:5001/api/Tasks/15"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

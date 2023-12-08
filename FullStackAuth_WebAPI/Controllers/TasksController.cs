@@ -27,7 +27,7 @@ namespace FullStackAuth_WebAPI.Controllers
             {
                 string userId = User.FindFirstValue("id");
 
-                //Retrieve all cars from the database, using Dtos
+                //Retrieve all task from the database, using Dtos
                 var tasks = _context.Tasks.Select(t => new TaskWithUserDto
                 {
                     Id = t.Id,
@@ -45,7 +45,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 }).ToList();
 
 
-                // Return the list of cars as a 200 OK response
+                // Return the list of task as a 200 OK response
                 return StatusCode(200, tasks);
             }
             catch (Exception ex)
@@ -75,21 +75,21 @@ namespace FullStackAuth_WebAPI.Controllers
                 }
 
 
-                // Set the car's owner ID  the authenticated user's ID we found earlier
+                // Set the task owner ID  the authenticated user's ID we found earlier
                 data.OwnerId = userId;
 
 
-                // Add the car to the database and save changes
+                // Add the task to the database and save changes
                 _context.Tasks.Add(data);
                 if (!ModelState.IsValid)
                 {
                     Console.WriteLine("Please fill out all info");
-                    // If the car model state is invalid, return a 400 bad request response with the model state errors
+                    // If the task model state is invalid, return a 400 bad request response with the model state errors
                     return BadRequest(ModelState);
                 }
                 _context.SaveChanges();
 
-                // Return the newly created car as a 201 created response
+                // Return the newly created task as a 201 created response
                 return StatusCode(201, data);
             }
             catch (Exception ex)
@@ -111,7 +111,7 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             try
             {
-                // Find the car to be deleted
+                // Find the task to be deleted
                 TaskList task = _context.Tasks.FirstOrDefault(c => c.Id == id);
                 if (task == null)
                 {
@@ -119,10 +119,10 @@ namespace FullStackAuth_WebAPI.Controllers
                     return NotFound();
                 }
 
-                // Check if the authenticated user is the owner of the car
+                
 
 
-                // Remove the car from the database
+                // Remove the task from the database
                 _context.Tasks.Remove(task);
                 _context.SaveChanges();
 

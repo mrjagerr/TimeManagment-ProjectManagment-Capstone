@@ -27,12 +27,11 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             try
             {
-                //Includes entire Owner object--insecure!
-                //var cars = _context.Cars.Include(c => c.Owner).ToList();
+                
 
 
                 var shifts = _context.Shifts.ToList();
-                // Return the list of cars as a 200 OK response
+                // Return the list of shifts as a 200 OK response
                 return StatusCode(200, shifts);
             }
             catch (Exception ex)
@@ -46,8 +45,7 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             try
             {
-                //Includes entire Owner object--insecure!
-                //var cars = _context.Cars.Include(c => c.Owner).ToList();
+                
                 var users = _context.Users.Where(c => c.FirstName == firstName).Select(c => new UserForDisplayDto
                 {
                     Id = c.Id,
@@ -78,7 +76,7 @@ namespace FullStackAuth_WebAPI.Controllers
             }).ToList();
 
 
-                // Return the list of cars as a 200 OK response
+                // Return the list of shifts as a 200 OK response
                 return StatusCode(200, myShifts);
             }
             catch (Exception ex)
@@ -94,7 +92,7 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             try
             {
-                // Retrieve the car with the specified ID, including the owner object
+                // Retrieve the shift with the specified date, including the owner object
                
                 var shiftsDate = _context.Shifts.Where(c => c.ShiftDate== dateTime).ToList();
 
@@ -142,16 +140,16 @@ namespace FullStackAuth_WebAPI.Controllers
                
                
 
-                // Add the car to the database and save changes
+                // Add the shift to the database and save changes
                 _context.Shifts.Add(data);
                 if (!ModelState.IsValid)
                 {Console.WriteLine("Please fill out all info");
-                    // If the car model state is invalid, return a 400 bad request response with the model state errors
+                    // If the shift model state is invalid, return a 400 bad request response with the model state errors
                     return BadRequest(ModelState);
                 }
                 _context.SaveChanges();
 
-                // Return the newly created car as a 201 created response
+                // Return the newly created shift as a 201 created response
                 return StatusCode(201, data);
             }
             catch (Exception ex)
