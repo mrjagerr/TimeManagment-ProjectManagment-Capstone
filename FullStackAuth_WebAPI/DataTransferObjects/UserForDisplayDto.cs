@@ -11,6 +11,7 @@ namespace FullStackAuth_WebAPI.DataTransferObjects
         public string LastName { get; set; }
         public string UserName { get; set; }
         public bool isTeamLead { get; set; }
+        
 
     }
 }

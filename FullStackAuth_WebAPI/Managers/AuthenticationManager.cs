@@ -55,6 +55,8 @@ namespace FullStackAuth_WebAPI.Managers
                 new Claim("email", _user.Email),
                 new Claim("id", _user.Id),
                 new Claim("firstName",_user.FirstName),
+                new Claim("lastName", _user.LastName),
+
                
             };
 

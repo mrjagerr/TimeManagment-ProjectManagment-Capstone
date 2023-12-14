@@ -188,7 +188,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         public IActionResult Put(int id, [FromBody] Project data)
         {
             try
@@ -211,6 +211,8 @@ namespace FullStackAuth_WebAPI.Controllers
                 double  percent = workload / totalWorkload * 100;
                 percent = Math.Round(percent);
                 project.PercentCompleted = percent;
+                project.ProjectName = project.ProjectName;
+                project.ProjectDate = project.ProjectDate;
 
 
                 
