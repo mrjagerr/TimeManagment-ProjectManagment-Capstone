@@ -56,6 +56,9 @@ namespace FullStackAuth_WebAPI.Managers
                 new Claim("id", _user.Id),
                 new Claim("firstName",_user.FirstName),
                 new Claim("lastName", _user.LastName),
+                new Claim( "isTeamLead",_user.isTeamLead.ToString())
+               
+                
 
                
             };
