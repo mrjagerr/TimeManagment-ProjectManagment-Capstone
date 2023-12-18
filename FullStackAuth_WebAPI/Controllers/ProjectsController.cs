@@ -211,8 +211,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 double  percent = workload / totalWorkload * 100;
                 percent = Math.Round(percent);
                 project.PercentCompleted = percent;
-                project.ProjectName = project.ProjectName;
-                project.ProjectDate = project.ProjectDate;
+          
 
 
                 

@@ -9,10 +9,10 @@ namespace FullStackAuth_WebAPI.Models
 
         [Key]
         public int Id { get; set; }
-        [Required] 
+       
         public string ProjectName { get; set; }
 
-        [Required]
+     
         public string ProjectDate { get; set; }
 
         [Required]
